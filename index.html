@@ -1733,7 +1733,7 @@ section.active{display:block;}
       <div class="about-body">
         <p>Adam Toksöz is a mixed media painter working from a studio in Cotopaxi, Colorado — a small mountain town in the San Luis Valley he has called home for seven years. The shift in his work came more gradually: a few years in, the burnout from what he'd been making started showing up in the paintings. He let it. The work changed.</p>
         <p>His practice begins with frames. Found at thrift stores, estate sales, and architectural salvage — ornate gold, barn board, painted white, octagonal — each frame determines the surface, which shapes the thinking. What fills them is layered: <strong>acrylic, chalk, charcoal, conté crayon, gold and silver leaf, spray paint</strong>, alongside embedded objects — vintage postcards, coins, circuit boards, matchbooks, found hardware, incense.</p>
-        <p><span class="hl">T</span>he symbolic vocabulary draws from ancient mythology, world <span class="hl">r</span>eligions, systems theory, <span class="hl">a</span>nd contemporary cultural collapse. <span class="hl">N</span>othing is invented — the crown, the skull, the pyramid, the eye, the evergreen — the<span class="hl">s</span>e <span class="hl">m</span>otifs <span class="hl">m</span>igrate through the body of work as a shared language. An Egyptian feather-weighing informs a composition abou<span class="hl">t</span> grief. A Windows error dialog becomes a theological statement. The ancient and the digital collapse into each other because they always were the same thing.</p>
+        <p><span class="hl">T</span>he symbolic vocabulary draws from ancient mythology, world <span class="hl">r</span>eligions, systems theory, <span class="hl">a</span>nd contemporary cultural collapse. <span class="hl">N</span>othing is invented — the crown, the skull, the pyramid, the eye, the evergreen — the<span class="hl">s</span>e <span class="hl">m</span>otifs m<span class="hl">i</span>grate through the body of work as a shared language. An Egyptian feather-weighing informs a composition abou<span class="hl">t</span> grief. A Windows error dialog becomes a theological statement. The ancient and the digital collapse into each other because they always were the same thing.</p>
         <p><span class="invisible-ink" style="color:var(--void);user-select:text;transition:color 0s;" onmouseover="this.style.color='var(--ash2)'" onmouseout="this.style.color='var(--void)'">The mountains have a way of making the work more honest. You stop performing for an audience that isn't there.</span></p>
       <p>Rooted in street art, Toksöz has maintained a daily painting practice across four year-long projects — each started on his birthday in January — with three completed and the fourth currently underway. In 2024 he presented <em>Transmissions from the Ancient Past</em>, a solo exhibition of 30 mixed media paintings at Blo Back Gallery in Pueblo, Colorado. Three works remain in the permanent collection.</p>
       </div>
@@ -1744,7 +1744,7 @@ section.active{display:block;}
         <div class="cv-item"><div class="cv-yr">2024</div><div class="cv-det"><strong>Magna Carta 2.0</strong> sold post-exhibition. <strong>The All Mighty Sun</strong> sold during exhibition. <strong>Looking In</strong> sold prior to opening.</div></div>
         <div class="cv-item"><div class="cv-yr">2023–</div><div class="cv-det">Four year-long daily projects — <strong>Daily Acrylic Therapy</strong> (2023), <strong>Daily Faces</strong> (2024), <strong>The Evolving Physical</strong> (2025), <strong>HAND</strong> (2026, ongoing). Each started in January, each day minted.</div></div>
         <div class="cv-item"><div class="cv-yr">2021</div><div class="cv-det"><strong>Guest Check Sketches</strong> — First minted collection on Ethereum. 50 unique pen drawings on restaurant paper, made over a decade earlier.</div></div>
-        <div class="cv-item"><div class="cv-det">Label artwork: <strong>Collective Arts Brewing</strong> (2016) · <strong>Elevation Beer</strong> (ongoing). Brand collaborations including <a href="https://sozbazaar.com" target="_blank" style="color:var(--gold);opacity:0.65;border-bottom:1px solid rgba(196,144,26,0.3);">Söz Bazaar</a>.</div></div>
+        <div class="cv-item"><div class="cv-det">Label artwork: <strong>Collective Arts Brewing</strong> (2016) · <strong>Local Relic Brewing</strong> (2023) · <strong>Elevation Beer</strong> (ongoing). Brand collaborations including <a href="https://sozbazaar.com" target="_blank" style="color:var(--gold);opacity:0.65;border-bottom:1px solid rgba(196,144,26,0.3);">Söz Bazaar</a>.</div></div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:2px;">
@@ -2310,7 +2310,7 @@ function activateTransmit2() {
   document.querySelectorAll('section').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); });
   var t2 = document.getElementById('transmit2');
-  if (t2) { t2.classList.add('active'); window.scrollTo(0,0); }
+  if (t2) { t2.style.display = 'block'; t2.classList.add('active'); window.scrollTo(0,0); }
 }
 
 /* RIGHT-CLICK CONTEXT MENU */
