@@ -320,6 +320,7 @@ section.active{display:block;}
   opacity:0;transition:opacity 0.25s;
   display:flex;flex-direction:column;justify-content:flex-end;
   padding:1.2rem;z-index:3;
+  pointer-events:none;
 }
 .wi:hover .wi-ov{opacity:1;}
 .wi-title{
@@ -1189,14 +1190,14 @@ section.active{display:block;}
 <div id="found-obj-cursor"></div>
 <div id="artist-label" style="position:fixed;z-index:9600;background:var(--ebg);border:1px solid var(--eborder);font-family:'Space Mono',monospace;font-size:0.58rem;padding:0.45rem 0.85rem;color:var(--void);display:none;box-shadow:2px 2px 0 var(--eborder);letter-spacing:0.04em;pointer-events:none;">b. 1990 &middot; Cotopaxi, Colorado &middot; still transmitting</div>
 <div class="coords-overlay" id="coords-overlay" style="position:fixed;z-index:8500;background:var(--void2);border:1px solid var(--ash);padding:0.7rem 1.2rem;font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--gold2);display:none;pointer-events:none;box-shadow:2px 2px 0 var(--ash);">38.3706&deg; N &middot; 105.6530&deg; W</div>
-<div id="tx-clock-overlay" style="position:fixed;inset:0;z-index:7500;background:var(--void);display:none;align-items:center;justify-content:center;flex-direction:column;cursor:crosshair;" onclick="if(event.target===this)closeClock()">
+<div id="tx-clock-overlay" style="position:fixed;inset:0;z-index:7500;background:var(--void);display:none;align-items:center;justify-content:center;flex-direction:column;cursor:crosshair;" onclick="if(event.target===this){event.stopPropagation();closeClock();}">
   <div style="text-align:center;">
     <div class="txclock-time" id="txclock-time" data-time="00:00">00:00</div>
     <div class="txclock-rule"></div>
     <div class="txclock-location">Cotopaxi, Colorado &middot; 38.3706&deg; N</div>
     <div class="txclock-status" id="txclock-status">signal clear</div>
     <div class="txclock-date" id="txclock-date"></div>
-    <button class="txclock-close" onclick="closeClock()">close transmission &times;</button>
+    <button class="txclock-close" onclick="event.stopPropagation();closeClock()">close transmission &times;</button>
   </div>
 </div>
 <div id="exhibition-overlay" style="position:fixed;inset:0;z-index:8800;background:#000;display:none;align-items:center;justify-content:center;cursor:crosshair;">
@@ -3416,16 +3417,18 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 (function() {
   function wireImgSlots() {
-    document.querySelectorAll('.img-slot img, .pi img').forEach(function(img) {
-      if (img.getAttribute('data-lb-wired')) return;
-      if (img.closest('.hero-mosaic-item')) return;
-      img.setAttribute('data-lb-wired', '1');
-      img.style.cursor = 'crosshair';
-      img.addEventListener('click', function(e) {
+    document.querySelectorAll('.wi.img-slot, .receipt-gc-item.img-slot, .easel-img.img-slot, .pi.img-slot').forEach(function(slot) {
+      if (slot.getAttribute('data-lb-wired')) return;
+      var img = slot.querySelector('img');
+      if (!img) return;
+      slot.setAttribute('data-lb-wired', '1');
+      slot.style.cursor = 'crosshair';
+      slot.addEventListener('click', function(e) {
         e.stopPropagation();
-        var slot = this.closest('.img-slot');
-        var label = slot ? slot.querySelector('.img-slot-label') : null;
-        lbImg(this.src, label ? label.textContent : (this.alt || ''));
+        var img = this.querySelector('img');
+        if (!img || img.src.includes('svg+xml')) return;
+        var label = this.querySelector('.wi-title');
+        lbImg(img.src, label ? label.textContent : (img.alt || ''));
       });
     });
   }
