@@ -448,35 +448,14 @@
 </div>
 
 <script>
-  // detect if iframe got blocked and show fallback
   const frame = document.getElementById('tlFrame');
   const fallback = document.getElementById('fallback');
   const wrap = document.getElementById('iframeWrap');
 
-  // give it 3s to load; if it errors or stays blank, show fallback
-  frame.addEventListener('error', showFallback);
-
-  // CSP / X-Frame-Options blocks show up as load events with no content
-  // — use a timeout heuristic
-  let loaded = false;
-  frame.addEventListener('load', () => { loaded = true; });
-
-  setTimeout(() => {
-    try {
-      // if cross-origin block, accessing contentDocument throws
-      const doc = frame.contentDocument;
-      if (!doc || !doc.body || doc.body.innerHTML === '') showFallback();
-    } catch(e) {
-      // blocked by X-Frame-Options — show fallback
-      showFallback();
-    }
-  }, 3000);
-
-  function showFallback() {
-    frame.style.display = 'none';
-    fallback.style.display = 'block';
-    wrap.style.height = 'auto';
-  }
+  // hide iframe by default, only show if it loads clean
+  frame.style.display = 'none';
+  fallback.style.display = 'block';
+  wrap.style.height = 'auto';
 </script>
 </body>
 </html>
