@@ -408,35 +408,10 @@
     </p>
   </div>
 
-  <!-- iframe attempt, fallback to button -->
-  <div class="iframe-section">
-    <p class="iframe-label">redemption contract</p>
-
-    <div class="iframe-wrap" id="iframeWrap">
-      <iframe
-        id="tlFrame"
-        src="https://www.transient.xyz/redemption/base/0xb2eeda82a824373926054437b44ef6cdbd658080"
-        title="faith.exe redemption — Transient Labs"
-        allow="clipboard-write"
-      ></iframe>
-      <!-- fallback shown by JS if iframe is blocked -->
-      <div class="iframe-fallback" id="fallback">
-        <p>
-          The redemption runs on Transient Labs.<br/>
-          Connect your wallet there to burn <code>lol nothing lasts forever</code><br/>
-          and receive <code>faith.exe</code>.
-        </p>
-        <a
-          href="https://www.transient.xyz/redemption/base/0xb2eeda82a824373926054437b44ef6cdbd658080"
-          target="_blank"
-          rel="noopener"
-          class="btn-redeem"
-        >redeem on transient labs →</a>
-        <p class="cta-note">opens in a new tab · Base chain · wallet required</p>
-      </div>
-    </div>
+  <div class="cta-row">
+    <a href="https://www.transient.xyz/redemption/base/0xb2eeda82a824373926054437b44ef6cdbd658080" target="_blank" rel="noopener" class="btn-redeem">redeem on transient labs →</a>
+    <p class="cta-note">opens in a new tab · Base chain · wallet required</p>
   </div>
-
   <!-- footer -->
   <footer class="page-footer">
     <span>© 2026 · Adam Toksöz · Cotopaxi, Colorado</span>
@@ -447,36 +422,6 @@
 
 </div>
 
-<script>
-  // detect if iframe got blocked and show fallback
-  const frame = document.getElementById('tlFrame');
-  const fallback = document.getElementById('fallback');
-  const wrap = document.getElementById('iframeWrap');
 
-  // give it 3s to load; if it errors or stays blank, show fallback
-  frame.addEventListener('error', showFallback);
-
-  // CSP / X-Frame-Options blocks show up as load events with no content
-  // — use a timeout heuristic
-  let loaded = false;
-  frame.addEventListener('load', () => { loaded = true; });
-
-  setTimeout(() => {
-    try {
-      // if cross-origin block, accessing contentDocument throws
-      const doc = frame.contentDocument;
-      if (!doc || !doc.body || doc.body.innerHTML === '') showFallback();
-    } catch(e) {
-      // blocked by X-Frame-Options — show fallback
-      showFallback();
-    }
-  }, 3000);
-
-  function showFallback() {
-    frame.style.display = 'none';
-    fallback.style.display = 'block';
-    wrap.style.height = 'auto';
-  }
-</script>
 </body>
 </html>
