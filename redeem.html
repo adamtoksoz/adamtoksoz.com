@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>faith.exe — burn to redeem · Here for the Art</title>
+  <style>
+    :root {
+      --bg: #0f0d09;
+      --bg2: #1e1a12;
+      --border: #3a3228;
+      --border-dim: #2a2218;
+      --text: #c8b99a;
+      --text-dim: #6b5e4e;
+      --text-bright: #e8d9c0;
+      --accent: #c8a84b;
+      --accent-dim: #7a6428;
+      --red: #8b3a2a;
+      --mono: 'Courier New', Courier, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── header ── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .site-header a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .site-header a:hover { color: var(--text); }
+
+    .site-header .logo {
+      color: var(--text-bright);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── series label ── */
+    .series-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* ── title block ── */
+    .title-block {
+      margin-bottom: 40px;
+    }
+
+    .title-block h1 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: normal;
+      color: var(--text-bright);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .title-block .subtitle {
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── two-piece layout ── */
+    .pieces {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .pieces { grid-template-columns: 1fr; }
+    }
+
+    .piece {
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .piece img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: brightness(0.92);
+      transition: filter 0.3s;
+    }
+
+    .piece:hover img { filter: brightness(1); }
+
+    .piece-info {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border-dim);
+    }
+
+    .piece-number {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    .piece-title {
+      color: var(--text-bright);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .piece-status {
+      font-size: 10px;
+      margin-top: 6px;
+      letter-spacing: 0.08em;
+    }
+
+    .status-burn { color: var(--red); }
+    .status-receive { color: var(--accent); }
+
+    /* ── arrow between pieces ── */
+    .arrow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 40px;
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    .arrow-row .arrow {
+      color: var(--accent-dim);
+      font-size: 18px;
+    }
+
+    /* ── mechanic explainer ── */
+    .mechanic {
+      border: 1px solid var(--border-dim);
+      border-left: 2px solid var(--accent-dim);
+      background: var(--bg2);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .mechanic-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .mechanic p {
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .mechanic p:last-child { margin-bottom: 0; }
+
+    .mechanic code {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    /* ── iframe container ── */
+    .iframe-section {
+      margin-bottom: 32px;
+    }
+
+    .iframe-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .iframe-wrap {
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      position: relative;
+      width: 100%;
+      height: 620px;
+      overflow: hidden;
+    }
+
+    .iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* fallback shown if iframe fails */
+    .iframe-fallback {
+      display: none;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .iframe-fallback p {
+      color: var(--text-dim);
+      font-size: 11px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* ── CTA button ── */
+    .btn-redeem {
+      display: inline-block;
+      padding: 14px 32px;
+      border: 1px solid var(--accent-dim);
+      background: transparent;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .btn-redeem:hover {
+      background: var(--accent-dim);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* standalone CTA row (used when no iframe) */
+    .cta-row {
+      text-align: center;
+      padding: 32px 0;
+    }
+
+    .cta-note {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── footer ── */
+    .page-footer {
+      margin-top: 64px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+
+    .page-footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .page-footer a:hover { color: var(--text); }
+
+    /* ── blink cursor ── */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cursor {
+      display: inline-block;
+      width: 7px;
+      height: 12px;
+      background: var(--accent-dim);
+      vertical-align: middle;
+      animation: blink 1.2s step-end infinite;
+      margin-left: 2px;
+    }
+
+    /* ── fade in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .title-block  { animation: fadeUp 0.5s ease both; }
+    .pieces       { animation: fadeUp 0.5s 0.1s ease both; }
+    .arrow-row    { animation: fadeUp 0.5s 0.15s ease both; }
+    .mechanic     { animation: fadeUp 0.5s 0.2s ease both; }
+    .iframe-section { animation: fadeUp 0.5s 0.25s ease both; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- header -->
+  <header class="site-header">
+    <a href="https://www.adamtoksoz.com" class="logo">Adam Toksöz</a>
+    <a href="https://www.adamtoksoz.com">← back to site</a>
+  </header>
+
+  <!-- title -->
+  <div class="title-block">
+    <p class="series-label">Here for the Art · Series 03</p>
+    <h1>burn to redeem<span class="cursor"></span></h1>
+    <p class="subtitle">faith.exe · Base · Transient Labs</p>
+  </div>
+
+  <!-- the two pieces -->
+  <div class="pieces">
+
+    <div class="piece">
+      <img
+        src="https://raw.githubusercontent.com/adamtoksoz/adamtoksoz.com/main/lol%20nothing%20lasts%20forever.jpg"
+        alt="lol nothing lasts forever"
+        onerror="this.style.background='#1e1a12';this.style.height='300px';"
+      />
+      <div class="piece-info">
+        <p class="piece-number">here_for_the_art_02.jpg</p>
+        <p class="piece-title">lol nothing lasts forever</p>
+        <p class="piece-status status-burn">↳ burn this</p>
+      </div>
+    </div>
+
+    <div class="piece">
+      <img
+        src="https://raw.githubusercontent.com/adamtoksoz/adamtoksoz.com/main/images/originals/faith_exe.jpeg"
+        alt="faith.exe"
+        onerror="this.style.background='#1e1a12';this.style.height='300px';"
+      />
+      <div class="piece-info">
+        <p class="piece-number">here_for_the_art_03.jpg</p>
+        <p class="piece-title">faith.exe</p>
+        <p class="piece-status status-receive">↳ receive this</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- arrow row -->
+  <div class="arrow-row">
+    <span>lol nothing lasts forever</span>
+    <span class="arrow">→</span>
+    <span>faith.exe</span>
+  </div>
+
+  <!-- mechanic explainer -->
+  <div class="mechanic">
+    <p class="mechanic-label">how it works</p>
+    <p>
+      Send <code>lol nothing lasts forever</code> to the redemption contract.
+      The contract detects the right token and mints <code>faith.exe</code> directly to your wallet.
+      The original is gone. The new one is yours.
+    </p>
+    <p>
+      This is the third piece in the Here for the Art series — redeemable only by holders of piece two.
+      Always open. No time limit. No cap beyond the supply that exists.
+    </p>
+    <p>
+      <code>faith.exe /running...</code> &nbsp;·&nbsp;
+      <code>generated: genuine</code> &nbsp;·&nbsp;
+      <code>error — too much hope detected</code>
+    </p>
+  </div>
+
+  <!-- iframe attempt, fallback to button -->
+  <div class="iframe-section">
+    <p class="iframe-label">redemption contract</p>
+
+    <div class="iframe-wrap" id="iframeWrap">
+      <iframe
+        id="tlFrame"
+        src="https://www.transient.xyz/redemption/base/0xb2eeda82a824373926054437b44ef6cdbd658080"
+        title="faith.exe redemption — Transient Labs"
+        allow="clipboard-write"
+      ></iframe>
+      <!-- fallback shown by JS if iframe is blocked -->
+      <div class="iframe-fallback" id="fallback">
+        <p>
+          The redemption runs on Transient Labs.<br/>
+          Connect your wallet there to burn <code>lol nothing lasts forever</code><br/>
+          and receive <code>faith.exe</code>.
+        </p>
+        <a
+          href="https://www.transient.xyz/redemption/base/0xb2eeda82a824373926054437b44ef6cdbd658080"
+          target="_blank"
+          rel="noopener"
+          class="btn-redeem"
+        >redeem on transient labs →</a>
+        <p class="cta-note">opens in a new tab · Base chain · wallet required</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer class="page-footer">
+    <span>© 2026 · Adam Toksöz · Cotopaxi, Colorado</span>
+    <a href="https://www.transient.xyz/nfts/base/0x9e376232473e0bbdbc4f49af81a4de4885ff07b4" target="_blank" rel="noopener">
+      view full collection →
+    </a>
+  </footer>
+
+</div>
+
+<script>
+  // detect if iframe got blocked and show fallback
+  const frame = document.getElementById('tlFrame');
+  const fallback = document.getElementById('fallback');
+  const wrap = document.getElementById('iframeWrap');
+
+  // give it 3s to load; if it errors or stays blank, show fallback
+  frame.addEventListener('error', showFallback);
+
+  // CSP / X-Frame-Options blocks show up as load events with no content
+  // — use a timeout heuristic
+  let loaded = false;
+  frame.addEventListener('load', () => { loaded = true; });
+
+  setTimeout(() => {
+    try {
+      // if cross-origin block, accessing contentDocument throws
+      const doc = frame.contentDocument;
+      if (!doc || !doc.body || doc.body.innerHTML === '') showFallback();
+    } catch(e) {
+      // blocked by X-Frame-Options — show fallback
+      showFallback();
+    }
+  }, 3000);
+
+  function showFallback() {
+    frame.style.display = 'none';
+    fallback.style.display = 'block';
+    wrap.style.height = 'auto';
+  }
+</script>
+</body>
+</html>
