@@ -2247,7 +2247,6 @@ function lbImg(src, cap, desc) {
 (function() {
   var h = new Date().getHours();
   if (h >= 23 || h < 4) {
-    document.body.style.setProperty('--void','#08060403');
     // inject late transmission note into first colophon
     setTimeout(function() {
       var cols = document.querySelectorAll('.transmission-count');
